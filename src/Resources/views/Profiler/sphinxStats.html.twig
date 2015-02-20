@@ -1,0 +1,102 @@
+{% extends 'WebProfilerBundle:Profiler:layout.html.twig' %}
+
+{% block toolbar %}
+    <div class="sf-toolbar-block">
+        <div class="sf-toolbar-info">
+            <div class="sf-toolbar-info-piece">
+                <b>Queries: </b>
+                <span class="sf-toolbar-status sf-toolbar-status-green">{{ collector.data.queries|length }}</span>
+            </div>
+            <div class="sf-toolbar-info-piece">
+                <b>Execution time: </b>
+                <span class="sf-toolbar-status sf-toolbar-status-green">{{ collector.data.time_summary|number_format(2) }} ms</span>
+            </div>
+            {% if collector.data.errors|length != 0 %}
+                <div class="sf-toolbar-info-piece">
+                    <b>Errors: </b>
+                    <span class="sf-toolbar-status sf-toolbar-status-red">{{ collector.data.errors|length }}</span>
+                </div>
+                <div class="sf-toolbar-info-piece">
+                    <b>Last error: </b>
+                    {{ (collector.data.errors|last).message }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="sf-toolbar-icon">
+            <a href="{{ path('_profiler', { 'token': token, 'panel': name }) }}">
+            <span class="icon"> <img src="data:image/png;base64,
+iVBORw0KGgoAAAANSUhEUgAAAB4AAAAcCAYAAAB2+A+pAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3wITDhcW7BmzhgAABOVJREFUSMftVstrnFUU/51z7/eYmcxMHk2rxjbWpNJqrCBUxQdFUJAiKIgL3ys3+gdocVEQF4oLXRbdCKJoLWjFYny0KCrSQi2ltkgTX7VJGzOZmWTm+2bmu4/joh1tYytNKXWhv9V37j33/s4933kB/xLoIurKxSKmRd9yDgJaRE7nYwidRe6SyGmrfaVCsRxoXVTMOUU6JiY4scZ52zaZXWim6bzzvtI9wszkvT+nAQSATyPz3Y1QB1cWiz2jWgcjmvkGpfUoMV9OxCUijogIHt4CSOBlxphswlm7t2OyI7V6/RCAKgAopdg5J4sNoDMFGhro670xCsMxZnWzUmoMxMsYUiBmDe/gWgnEWZCcspEYFISgIPaidNM7O+O8+8ZYt3u2OrfLOzcNAFprstb+SU7L+vo2EauRQAerleLrtFbXEqgfQExEzMQQAry186o82MitXjekegfBuR4BiKTVFPP7UeocPUKuMQfoCOKsA2jeeLuv0+68NVuv7hDn6/k4RtpuAwB0FOeeiKPoPvGeiCjoeoGZYUx2POlkOz3wNVj/etUjzzxXHF1/JYWxUBiRgEiyNqTVoPSXH+aPbXv1TZqa2BTli1c7a8qh0nerPK9cJr3Ts9XqZ11SANDNZvPdOAzvB8ACOEDanSzbmabpO5m1hxg01TamM/bCuzp39bVDXOqF67SJrBEAEGbR/ZdRFOZ1q3/oi873e1/pAT2Wj+LNIFIQ5Im5tDi42Fm7o9FsbmFmLd4TBD0kUJkxe5MkmWgkzdSYjJhYfJY1xXlABER00jUiJM7Am7Y3UGkzMz+dmJl5frY6d6cx5lsSiryXbHFMqcwaaWWtvUopisJwIwRQWl0X6OCmOIy+S1utCgDPV6wW06yHpVWjm4gIEAGIiESEgpDqteoRXe7fXP/yfQDwWZYdy4wZB8EpxVNJmk6eHtnq+rVrMTNbcUmafhUGYTUI9I1E1BNoPayUeiCOoxNBEEzN7vk8yW95+4D9bWJNvlAcBavgVJJK2mr/PPHJ9qePz6lJHNjZvTwIVZDONxZ2J2n6UxyGYp07M52iMEIn6wAABgeW3ZPP5Z5VRLcTs/LikWVmGzO9XpmePtwCKqte+ujxobENd7G3cS1JJw+/8fJWjL82CQA9hfxQuVReI142NJrNA42k+emf/5UIXuRMn48Mj+DHX38EAOTj3Kr+3t4ntdYPMfMIEcF7nxlrdynCHmrUDlYbrUoLyHJAp1gq5sNy/7CIv8Y6dxsRhol4/0Jj4cX6wsL+RSX37wVkfHwcjz70MCq1KgDgiuUrbmXF9zLxg1rrUaKT6iJiRPyMeEmJSUGoQEzLvfeZde49Bm0/enxqF4BkcGAAs3Nz59ckCoUCkiTpitHlg8vXseL1IrgrDII7lFJXyanI9t4bY+24iOyEyMGpmROHAMwDQKlQxELSWHqrU0rB/RUQVCz0lAd6e29h5o9xkrTunHsqSdPx6nx9vlvrmRmnGsS57/7HBitnNpbMZO0gCA0rulkrtTIz5oNKrba1kTQr/3TubOClTg6z1cq09/59gACCYsV0IYPAkohzuRgAjLHuQ+vcvkAHG/tK5eELGX3UUpSttSiVSqjWanO5KJ4mwpj3bk8jSSYv9cy2IgzCoUAH6pKwdfP5dERBdElfzEucVP/Hfwh/ADLUZ+1J70yMAAAAAElFTkSuQmCC
+" alt="sphinx" /> </span>
+                {#<span class="icon"><img src="data:image/png;base64,..." alt="" /></span>#}
+                {% set error_class = collector.data.errors|length == 0 ? "" : "sf-toolbar-status-red" %}
+                <span class="sf-toolbar-status {{ error_class }}">{{ collector.data.queries|length }}</span>
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block menu %}
+    <span class="label">
+        <span class="icon"><img src="data:image/png;base64,
+iVBORw0KGgoAAAANSUhEUgAAAB4AAAAcCAYAAAB2+A+pAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3wITDhcW7BmzhgAABOVJREFUSMftVstrnFUU/51z7/eYmcxMHk2rxjbWpNJqrCBUxQdFUJAiKIgL3ys3+gdocVEQF4oLXRbdCKJoLWjFYny0KCrSQi2ltkgTX7VJGzOZmWTm+2bmu4/joh1tYytNKXWhv9V37j33/s4933kB/xLoIurKxSKmRd9yDgJaRE7nYwidRe6SyGmrfaVCsRxoXVTMOUU6JiY4scZ52zaZXWim6bzzvtI9wszkvT+nAQSATyPz3Y1QB1cWiz2jWgcjmvkGpfUoMV9OxCUijogIHt4CSOBlxphswlm7t2OyI7V6/RCAKgAopdg5J4sNoDMFGhro670xCsMxZnWzUmoMxMsYUiBmDe/gWgnEWZCcspEYFISgIPaidNM7O+O8+8ZYt3u2OrfLOzcNAFprstb+SU7L+vo2EauRQAerleLrtFbXEqgfQExEzMQQAry186o82MitXjekegfBuR4BiKTVFPP7UeocPUKuMQfoCOKsA2jeeLuv0+68NVuv7hDn6/k4RtpuAwB0FOeeiKPoPvGeiCjoeoGZYUx2POlkOz3wNVj/etUjzzxXHF1/JYWxUBiRgEiyNqTVoPSXH+aPbXv1TZqa2BTli1c7a8qh0nerPK9cJr3Ts9XqZ11SANDNZvPdOAzvB8ACOEDanSzbmabpO5m1hxg01TamM/bCuzp39bVDXOqF67SJrBEAEGbR/ZdRFOZ1q3/oi873e1/pAT2Wj+LNIFIQ5Im5tDi42Fm7o9FsbmFmLd4TBD0kUJkxe5MkmWgkzdSYjJhYfJY1xXlABER00jUiJM7Am7Y3UGkzMz+dmJl5frY6d6cx5lsSiryXbHFMqcwaaWWtvUopisJwIwRQWl0X6OCmOIy+S1utCgDPV6wW06yHpVWjm4gIEAGIiESEgpDqteoRXe7fXP/yfQDwWZYdy4wZB8EpxVNJmk6eHtnq+rVrMTNbcUmafhUGYTUI9I1E1BNoPayUeiCOoxNBEEzN7vk8yW95+4D9bWJNvlAcBavgVJJK2mr/PPHJ9qePz6lJHNjZvTwIVZDONxZ2J2n6UxyGYp07M52iMEIn6wAABgeW3ZPP5Z5VRLcTs/LikWVmGzO9XpmePtwCKqte+ujxobENd7G3cS1JJw+/8fJWjL82CQA9hfxQuVReI142NJrNA42k+emf/5UIXuRMn48Mj+DHX38EAOTj3Kr+3t4ntdYPMfMIEcF7nxlrdynCHmrUDlYbrUoLyHJAp1gq5sNy/7CIv8Y6dxsRhol4/0Jj4cX6wsL+RSX37wVkfHwcjz70MCq1KgDgiuUrbmXF9zLxg1rrUaKT6iJiRPyMeEmJSUGoQEzLvfeZde49Bm0/enxqF4BkcGAAs3Nz59ckCoUCkiTpitHlg8vXseL1IrgrDII7lFJXyanI9t4bY+24iOyEyMGpmROHAMwDQKlQxELSWHqrU0rB/RUQVCz0lAd6e29h5o9xkrTunHsqSdPx6nx9vlvrmRmnGsS57/7HBitnNpbMZO0gCA0rulkrtTIz5oNKrba1kTQr/3TubOClTg6z1cq09/59gACCYsV0IYPAkohzuRgAjLHuQ+vcvkAHG/tK5eELGX3UUpSttSiVSqjWanO5KJ4mwpj3bk8jSSYv9cy2IgzCoUAH6pKwdfP5dERBdElfzEucVP/Hfwh/ADLUZ+1J70yMAAAAAElFTkSuQmCC
+" alt="" /></span>
+        <strong>Sphinx</strong>
+        <span class="count">
+            <span>{{ collector.data.time_summary|number_format(2) }} ms</span>
+        </span>
+    </span>
+{% endblock %}
+
+{% block panel %}
+    <h2>SphinxSearchBundle</h2>
+
+    {% if collector.data.errors|length == 0 %}
+        <p><em>No errors were triggered.</em></p>
+    {% else %}
+        <table>
+            <tr>
+                <th>#</th>
+                <th>Error</th>
+                <th>#query</th>
+                <th>query</th>
+            </tr>
+
+            {% for error in collector.data.errors %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ error.message }}</td>
+                    {% if error.query is not null %}
+                        <td> {{ error.query + 1 }}</td>
+                        <td> {{ collector.data.queries[error.query].toString }}</td>
+                    {% else %}
+                        <td></td>
+                        <td></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+
+    {% if collector.data.queries|length == 0 %}
+        <p><em>No queries were executed.</em></p>
+    {% else %}
+        <table>
+            <tr>
+                <th>#</th>
+                <th>Query</th>
+                <th>Duration</th>
+                <th>Success</th>
+            </tr>
+
+            {% for query in collector.data.queries %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ query.toString }}</td>
+                    <td>{{ query.time|number_format(2) }} ms</td>
+                    <td>{% if query.success %} OK {% else %} nope {% endif %}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+{% endblock %}

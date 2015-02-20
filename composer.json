@@ -1,0 +1,23 @@
+{
+    "name": "ekiwok/sphinxbundle",
+    "type": "library",
+    "description": "Symfony integration for SphinxSearch",
+    "keywords": ["sphinx", "sphinxsearch", "search", "profiler"],
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "Piotr <<ekiwok>> Kowalczyk",
+            "email": "github@piotr.kowalczyk.codes"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.2",
+        "gigablah/sphinxphp": "2.0.*"
+    },
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Ekiwok\\SphinxBundle": "src/"
+        }
+    }
+}
