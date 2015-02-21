@@ -1,15 +1,65 @@
 # SphinxSearchBundle
-Some SphinxSearch integration with Symfony. Already done:
-* symfony profiler integration
-  * number of query calls
-  * time of query calls
-  * counting and displaying errors
+Some SphinxSearch integration with Symfony for `gigablah/sphinxphp` and `foolz/sphinxql-query-builder`.
 ![Alt text](/doc/images/profiler_error.png?raw=true "Profiler with last error")
 
 # Installation
 Install via composer:
 
 ` composer require ekiwok/sphinxbundle `
+
+## QueryBuilder
+
+You may register many connections. Example configuration is:
+
+```
+ekiwok_sphinx:
+    connections:
+        default:
+            host: localhost
+            port: 9306
+            driver: pdo
+        remote:
+            host: remote-host
+            port: 9306
+            driver: mysqli
+```
+
+Default connection with following configuration will always be created unless you provide alternative default configuration:
+
+```
+    host: localhost
+    port: 9306
+    driver: pdo
+```
+
+It means if you want to use pdo and you are running sphinx daemon on localhost on port 9306 you do not have to provide any configuration.
+
+Please notice that `$this->get('sphinx')->getConnection()` is equivalent to `$this->get('sphinx')->getConnection('default')`.
+
+Connections returned by `sphinx` service implements `Ekiwok\SphinxBundle\Sphinx\QL\ConnectionInterface` that extends `Foolz\SphinxQL\Drivers\ConnectionInterface` by `createQueryBuilder()` method so thay may be (and shoud be) used interchangeable with Foolz\SphinxQL connections.
+
+Examples of usage:
+
+```
+        $sphinx = $this->get('sphinx');
+        $conn = $sphinx->getConnection();
+        $recipes = $conn->createQueryBuilder()
+                        ->select('id', 'title')
+                        ->from('recipes')
+                        ->match('title', 'chicken')
+                        ->limit(100)
+                        ->execute();
+```
+
+```
+        $sphinx = $this->get('sphinx');
+        $conn = $sphinx->getConnection();
+        $recipes = $conn->query('SELECT id, title FROM recipes WHERE MATCH("(@title chicken)")');
+```
+
+For more please visit [https://github.com/FoolCode/SphinxQL-Query-Builder](https://github.com/FoolCode/SphinxQL-Query-Builder)
+
+## gigablah/sphinxphp
 
 ### Fresh use
 If you are just starting using sphinx in your project all you have to do is declare your default connection:

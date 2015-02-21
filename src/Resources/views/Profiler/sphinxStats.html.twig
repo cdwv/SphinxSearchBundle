@@ -5,7 +5,7 @@
         <div class="sf-toolbar-info">
             <div class="sf-toolbar-info-piece">
                 <b>Queries: </b>
-                <span class="sf-toolbar-status sf-toolbar-status-green">{{ collector.data.queries|length }}</span>
+                <span class="sf-toolbar-status sf-toolbar-status-green">{{ collector.getQueriesCount() }}</span>
             </div>
             <div class="sf-toolbar-info-piece">
                 <b>Execution time: </b>
@@ -29,7 +29,7 @@ iVBORw0KGgoAAAANSUhEUgAAAB4AAAAcCAYAAAB2+A+pAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMA
 " alt="sphinx" /> </span>
                 {#<span class="icon"><img src="data:image/png;base64,..." alt="" /></span>#}
                 {% set error_class = collector.data.errors|length == 0 ? "" : "sf-toolbar-status-red" %}
-                <span class="sf-toolbar-status {{ error_class }}">{{ collector.data.queries|length }}</span>
+                <span class="sf-toolbar-status {{ error_class }}">{{ collector.getQueriesCount() }}</span>
             </a>
         </div>
     </div>
@@ -78,8 +78,28 @@ iVBORw0KGgoAAAANSUhEUgAAAB4AAAAcCAYAAAB2+A+pAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMA
         </table>
     {% endif %}
 
+    {% if collector.data.sql.queries|length == 0 %}
+        <p><em>No SQL queries were executed.</em></p>
+    {% else %}
+        <table>
+            <tr>
+                <th>#</th>
+                <th>Query</th>
+                <th>Duration</th>
+            </tr>
+
+            {% for query in collector.data.sql.queries %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ query.query }}</td>
+                    <td>{{ query.time|number_format(2) }} ms</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+
     {% if collector.data.queries|length == 0 %}
-        <p><em>No queries were executed.</em></p>
+        <p><em>No API queries were executed.</em></p>
     {% else %}
         <table>
             <tr>

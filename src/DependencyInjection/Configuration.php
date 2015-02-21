@@ -4,6 +4,7 @@ namespace Ekiwok\SphinxBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Ekiwok\SphinxBundle\Sphinx\QL\Connection;
 
 /**
  * This is the class that validates and merges configuration from your app/config files
@@ -28,7 +29,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('host')->end()
                         ->scalarNode('port')->end()
                         ->enumNode('driver')
-                            ->values(array('pdo', 'mysqli'))
+                            ->values(Connection::getSupportedDrivers())
                         ->end()
                     ->end()
                 ->end()
