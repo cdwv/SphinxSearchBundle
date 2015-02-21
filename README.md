@@ -59,3 +59,19 @@ You can always instantiate SphinxDataCollector manually (for example in situatio
     $sphinxStats = $this->get('sphinx_stats');
     $sphinxClient = new \Ekiwok\SphinxBundle\Sphinx\SphinxDataCollector($sphinxClient, $sphinxStats);
 ```
+
+# What does this bundle do?
+
+Well, it shows fancy things and stuff in profiler and toolbar. Those things are now query calls and errors. So all it does is tracking calls of SphinxClient query method and measuring time of this method execution (yeah, it's not actuall query time).
+
+Because SphinxClient uses binary protocol this bundle does not show real human readable queries that may be copied to sphinx cli. (Now =) Unfortunately, it shows just arguments (query, indexes and comment) passed to query method.
+
+This bundle trakcs all errors that unfold during executing queries.
+
+# What this bundle should do?
+
+This bundle should provide much better integration with Symfony by providing:
+* tracking queries execution
+* tracking sphinx errors
+* automatisation of sphinx.conf generation
+* bridge between doctrine query builder and indexes configuration
