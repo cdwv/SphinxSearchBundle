@@ -6,6 +6,9 @@ services:
     sphinx.data.collector:
         class: Ekiwok\SphinxBundle\Sphinx\DataCollector
         arguments: [@sphinx.client, @sphinx_stats]
+    sphinx.pdo:
+        class: Ekiwok\SphinxBundle\Sphinx\PDOWrapper
+        arguments: [ '127.0.0.1', 9306, @sphinx_stats]
     sphinx_stats:
         class: Ekiwok\SphinxBundle\Service\StatsCollector
         tags:
