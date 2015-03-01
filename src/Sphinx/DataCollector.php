@@ -1,10 +1,4 @@
 <?php
-/**
- * @Author: ekiwok
- * @Date:   2015-02-19 14:28:43
- * @Last Modified by:   ekiwok
- * @Last Modified time: 2015-02-19 20:22:45
- */
 
 namespace Ekiwok\SphinxBundle\Sphinx;
 
@@ -21,7 +15,7 @@ class SphinxDataCollector extends SphinxClientDecorator
      * @param SphinxClient $client
      * @param SphinxDataProcessorInterface $collector
      */
-    public function __construct(SphinxClient $client, SphinxDataProcessorInterface $collector = null)
+    public function __construct(SphinxClient $client, DataProcessorInterface $collector = null)
     {
         parent::__construct($client);
         $this->collector = $collector;

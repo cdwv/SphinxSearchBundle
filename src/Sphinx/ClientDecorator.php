@@ -1,16 +1,10 @@
 <?php
-/**
- * @Author: Piotr Kowalczyk
- * @Date:   2015-02-19 12:52:23
- * @Last Modified by:   ekiwok
- * @Last Modified time: 2015-02-19 20:53:03
- */
 
 namespace Ekiwok\SphinxBundle\Sphinx;
 
 use Sphinx\SphinxClient;
 
-class SphinxClientDecorator extends SphinxClient
+class ClientDecorator extends SphinxClient
 {
     /**
      * @var SphinxClient

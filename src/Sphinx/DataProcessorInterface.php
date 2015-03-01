@@ -1,14 +1,8 @@
 <?php
-/**
- * @Author: ekiwok
- * @Date:   2015-02-19 16:04:21
- * @Last Modified by:   ekiwok
- * @Last Modified time: 2015-02-19 20:24:41
- */
 
 namespace Ekiwok\SphinxBundle\Sphinx;
 
-interface SphinxDataProcessorInterface
+interface DataProcessorInterface
 {
     /**
      * @param string $query

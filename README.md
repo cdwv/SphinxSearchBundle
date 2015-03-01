@@ -25,7 +25,7 @@ Next decorate it with data collector:
 
 ```
     sphinx.default:
-        class: Ekiwok\SphinxBundle\Sphinx\SphinxDataCollector
+        class: Ekiwok\SphinxBundle\Sphinx\DataCollector
         arguments: [@sphinx.default.connection, @sphinx_stats]
 ```
 
@@ -48,7 +48,7 @@ and register SphinxDataCollector as `sphinx.default`. Because SphinxDataCollecto
 
 ```
     sphinx.default:
-        class: Ekiwok\SphinxBundle\Sphinx\SphinxDataCollector
+        class: Ekiwok\SphinxBundle\Sphinx\DataCollector
         arguments: [@sphinx.default.connection, @sphinx_stats]
 ```
 
@@ -57,7 +57,7 @@ You can always instantiate SphinxDataCollector manually (for example in situatio
 ```
     // $sphinxClient is instance of Sphinx\SphinxClient
     $sphinxStats = $this->get('sphinx_stats');
-    $sphinxClient = new \Ekiwok\SphinxBundle\Sphinx\SphinxDataCollector($sphinxClient, $sphinxStats);
+    $sphinxClient = new \Ekiwok\SphinxBundle\Sphinx\DataCollector($sphinxClient, $sphinxStats);
 ```
 
 # What does this bundle do?

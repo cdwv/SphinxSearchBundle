@@ -1,19 +1,13 @@
 <?php
-/**
- * @Author: ekiwok
- * @Date:   2015-02-19 14:40:11
- * @Last Modified by:   ekiwok
- * @Last Modified time: 2015-02-19 20:27:21
- */
 
 namespace Ekiwok\SphinxBundle\Service;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
-use Ekiwok\SphinxBundle\Sphinx\SphinxDataProcessorInterface;
+use Ekiwok\SphinxBundle\Sphinx\DataProcessorInterface;
 
-class SphinxStatsCollector extends DataCollector implements SphinxDataProcessorInterface
+class StatsCollector extends DataCollector implements DataProcessorInterface
 {
     /**
      * Prepars arrays for upcoming data.

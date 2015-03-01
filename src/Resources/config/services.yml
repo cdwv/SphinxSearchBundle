@@ -4,9 +4,9 @@ services:
         calls: 
             - [setServer, ['127.0.0.1', 9312] ]
     sphinx.data.collector:
-        class: Ekiwok\SphinxBundle\Sphinx\SphinxDataCollector
+        class: Ekiwok\SphinxBundle\Sphinx\DataCollector
         arguments: [@sphinx.client, @sphinx_stats]
     sphinx_stats:
-        class: Ekiwok\SphinxBundle\Service\SphinxStatsCollector
+        class: Ekiwok\SphinxBundle\Service\StatsCollector
         tags:
             - { name: data_collector, template: "EkiwokSphinxBundle:Profiler:sphinxStats", id: "sphinx_stats"  }
