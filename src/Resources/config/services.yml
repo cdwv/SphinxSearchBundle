@@ -1,4 +1,7 @@
 services:
+    sphinx:
+        class: Ekiwok\SphinxBundle\Service\Sphinx
+        arguments: ['%sphinx.config%']
     sphinx.client:
         class: Sphinx\SphinxClient
         calls: 
