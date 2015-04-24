@@ -2,12 +2,25 @@
 
 namespace Ekiwok\SphinxBundle\Service;
 
+use Ekiwok\SphinxBundle\Exception\ConnectionException;
+use Ekiwok\SphinxBundle\Sphinx\QL\Connection;
+
 class Sphinx
 {
 
     const DEFAULT_HOST = 'localhost';
     const DEFAULT_PORT = 9306;
     const DEFAULT_DRIVER = 'pdo';
+
+    /**
+     * @var array
+     */
+    protected $config;
+
+    /**
+     * @var array
+     */
+    protected $connections = array();
 
     /**
      * @param array $config configuration
@@ -20,8 +33,24 @@ class Sphinx
                     'port' => self::DEFAULT_PORT,
                     'driver' => self::DEFAULT_DRIVER
                 );
-            $this->connections = $config['connections'];
+            $this->config = $config['connections'];
         }
+    }
+
+    /**
+     * @param  string $name
+     * @return Connection
+     */
+    public function getConnection($name = 'default')
+    {
+        if (!isset($this->config[$name])) {
+            throw ConnectionException::missingConnection($name, array_keys($this->config));
+        }
+        if (!isset($this->connections[$name])) {
+            $this->connections[$name] = new Connection($this->config[$name]);
+        }
+
+        return $this->connections[$name];
     }
 
 }
