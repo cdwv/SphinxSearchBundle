@@ -19,6 +19,24 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('ekiwok_sphinx');
+        $rootNode
+            ->children()
+                ->arrayNode('connections')
+                    ->useAttributeAsKey('name')
+                    ->prototype('array')
+                    ->children()
+                        ->scalarNode('host')->end()
+                        ->scalarNode('port')->end()
+                        ->enumNode('driver')
+                            ->values(array('pdo', 'mysqli'))
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+            ;
+
+
+
 
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for
