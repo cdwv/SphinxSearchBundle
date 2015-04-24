@@ -1,10 +1,4 @@
 <?php
-/**
- * @Author: ekiwok
- * @Date:   2015-02-19 14:40:11
- * @Last Modified by:   ekiwok
- * @Last Modified time: 2015-02-19 20:27:21
- */
 
 namespace Ekiwok\SphinxBundle\Service;
 
@@ -24,6 +18,18 @@ class SphinxStatsCollector extends DataCollector implements SphinxDataProcessorI
         $this->data['errors'] = array();
         $this->data['warnings'] = array();
         $this->data['time_summary'] = 0; // in milliseconds
+
+        $this->data = array(
+            'queries' => array(),
+            'errors'  => array(),
+            'warnings' => array(),
+            'time_summary' => 0,
+            'sql' => array(
+                    'queries' => array(),
+                    'errors' => array(),
+                    'time_summary' => 0
+                )
+        );
     }
 
     /**
@@ -54,7 +60,7 @@ class SphinxStatsCollector extends DataCollector implements SphinxDataProcessorI
     /**
      * {@inheritdoc}
      */
-    public function processQuery($query, $index, $comment, $success, $time)
+    public function processAPIQuery($query, $index, $comment, $success, $time)
     {
         $time *=  1000; //to milliseconds
         $toString = sprintf("%s %s", $query, $index);
@@ -64,6 +70,25 @@ class SphinxStatsCollector extends DataCollector implements SphinxDataProcessorI
 
         return key(array_slice($this->data['queries'], -1, 1, true));
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function processSQLQuery($query, array $info)
+    {
+        $tmp =& $this->data['sql'];
+        foreach ($info as $piece) {
+            switch ($piece['Variable_name'])
+            {
+                case 'time':
+                    $time = (float) $piece['Value'];
+                    $tmp['time_summary'] += $time;
+                continue;
+            }
+        }
+        $tmp['queries'][] = compact('time', 'query');
+
+    }
     
     /**
      * {@inheritdoc}
@@ -71,5 +96,18 @@ class SphinxStatsCollector extends DataCollector implements SphinxDataProcessorI
     public function processError($message, $query = null)
     {
         $this->data['errors'][] = compact('message', 'query');
+    }
+
+    /**
+     * Total number of called queries.
+     * 
+     * @return integer
+     */
+    public function getQueriesCount()
+    {
+        $api = count($this->data['queries']);
+        $sql = count($this->data['sql']['queries']);
+
+        return $api + $sql;
     }
 }

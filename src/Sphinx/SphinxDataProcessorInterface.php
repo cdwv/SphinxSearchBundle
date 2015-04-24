@@ -1,10 +1,4 @@
 <?php
-/**
- * @Author: ekiwok
- * @Date:   2015-02-19 16:04:21
- * @Last Modified by:   ekiwok
- * @Last Modified time: 2015-02-19 20:24:41
- */
 
 namespace Ekiwok\SphinxBundle\Sphinx;
 
@@ -18,7 +12,15 @@ interface SphinxDataProcessorInterface
      * @param float $time       in seconds
      * @return integer          query identifier
      */
-    public function processQuery($query, $index, $comment, $success, $time);
+    public function processAPIQuery($query, $index, $comment, $success, $time);
+
+    /**
+     * @param  string  $query
+     * @param  string  $success
+     * @param  integer $time
+     * @return integer          query identifier
+     */
+    public function processSQLQuery($query, array $info);
     
     /**
      * @param string $message

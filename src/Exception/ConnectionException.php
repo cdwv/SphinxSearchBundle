@@ -9,9 +9,9 @@ class ConnectionException extends \RuntimeException
      * @param  array  $availableConnections Array of available connections.
      * @return ConnectionException
      */
-    public function missingConnection($name, $availableConnections = array())
+    public static function missingConnection($name, $availableConnections = array())
     {
-        return new self(sprintf("There was no configuration for connection '%s'. Available connections are: []", $name, implode(', ', $availableConnections)));
+        return new self(sprintf("There was no configuration for connection '%s'. Available connections are: [%s]", $name, implode(', ', $availableConnections)));
     }
 
     /**
@@ -19,8 +19,8 @@ class ConnectionException extends \RuntimeException
      * @param  array  $availableDrivers Array of available drivers.
      * @return ConnectionException
      */
-    public function unsupportedDriver($name, $availableDrivers = array())
+    public static function unsupportedDriver($name, $availableDrivers = array())
     {
-        return new self(sprintf("Driver '%s' is not supportd.. Available drivers are: []", $name, implode(', ', $availableConnections)));
+        return new self(sprintf("Driver '%s' is not supportd.. Available drivers are: [%s]", $name, implode(', ', $availableConnections)));
     }
 }
