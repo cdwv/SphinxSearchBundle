@@ -2,6 +2,9 @@
 Some SphinxSearch integration with Symfony for `gigablah/sphinxphp` and `foolz/sphinxql-query-builder`.
 ![Alt text](/doc/images/profiler_error.png?raw=true "Profiler with last error")
 
+
+### Version 0.1.* was released during [Codewave's shipit day!](http://codewave.eu/shipit-days.html)
+
 # Installation
 Install via composer:
 
