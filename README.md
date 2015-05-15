@@ -121,10 +121,6 @@ Because SphinxClient uses binary protocol this bundle does not show real human r
 
 This bundle trakcs all errors that unfold during executing queries.
 
-# What this bundle should do?
+# Authors
+This bundle was originally developed by [Piotr Kowalczyk](https://github.com/ekiwok) 
 
-This bundle should provide much better integration with Symfony by providing:
-* tracking queries execution
-* tracking sphinx errors
-* automatisation of sphinx.conf generation
-* bridge between doctrine query builder and indexes configuration
