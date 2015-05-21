@@ -8,7 +8,7 @@ Some SphinxSearch integration with Symfony for `gigablah/sphinxphp` and `foolz/s
 # Installation
 Install via composer:
 
-` composer require ekiwok/sphinxbundle `
+` composer require cdwv/sphinx-search-bundle `
 
 ## QueryBuilder
 
