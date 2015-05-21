@@ -1,5 +1,5 @@
 {
-    "name": "cdwv/SphinxSearchBundle",
+    "name": "cdwv/sphinx-search-bundle",
     "type": "library",
     "description": "Symfony integration for SphinxSearch",
     "keywords": ["sphinx", "sphinxsearch", "search", "profiler"],
