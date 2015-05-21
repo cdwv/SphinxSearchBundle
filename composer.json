@@ -1,5 +1,5 @@
 {
-    "name": "ekiwok/sphinxbundle",
+    "name": "cdwv/sphinxbundle",
     "type": "library",
     "description": "Symfony integration for SphinxSearch",
     "keywords": ["sphinx", "sphinxsearch", "search", "profiler"],
