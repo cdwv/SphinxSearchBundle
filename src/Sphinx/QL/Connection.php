@@ -95,7 +95,6 @@ class Connection implements ConnectionInterface
             throw $e;
         } finally {
             $meta = $this->connection->query('SHOW META');
-            die(var_dump($meta));
             $this->processor->processSQLQuery(implode(';', $queue), $meta);
         }
 
@@ -139,6 +138,6 @@ class Connection implements ConnectionInterface
      */
     public function quoteArr(Array $array = array())
     {
-        return $this->connection->quoteAttr($array);
+        return $this->connection->quoteArr($array);
     }
 }
