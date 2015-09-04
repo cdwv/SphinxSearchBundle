@@ -30,17 +30,19 @@ class Sphinx
 
     /**
      * @param array $config configuration
+     * @param SphinxDataProcessorInterface $processor
      */
     public function __construct(array $config, SphinxDataProcessorInterface $processor)
     {
         $this->processor = $processor;
+        $this->config = $config['connections'];
+
         if (!isset($config['connections']['default'])) {
             $config['connections']['default'] = array(
-                    'host' => self::DEFAULT_HOST,
-                    'port' => self::DEFAULT_PORT,
-                    'driver' => self::DEFAULT_DRIVER
-                );
-            $this->config = $config['connections'];
+                'host' => self::DEFAULT_HOST,
+                'port' => self::DEFAULT_PORT,
+                'driver' => self::DEFAULT_DRIVER
+            );
         }
     }
 
@@ -51,10 +53,9 @@ class Sphinx
     public function getConnection($name = 'default')
     {
         if (!isset($this->config[$name])) {
-            var_dump($this->config);
-            var_dump(array_keys($this->config));
             throw ConnectionException::missingConnection($name, array_keys($this->config));
         }
+
         if (!isset($this->connections[$name])) {
             $this->connections[$name] = new Connection($this->config[$name], $this->processor);
         }

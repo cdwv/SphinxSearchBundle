@@ -1,9 +1,8 @@
 {
     "name": "cdwv/sphinx-search-bundle",
-    "type": "library",
     "description": "Symfony integration for SphinxSearch",
     "keywords": ["sphinx", "sphinxsearch", "search", "profiler"],
-    "license": "GPL-3.0",
+    "license": "MIT",
     "authors": [
         {
             "name": "Piotr <<ekiwok>> Kowalczyk",
@@ -13,12 +12,12 @@
     "require": {
         "php": ">=5.3.2",
         "gigablah/sphinxphp": "2.0.*",
-        "foolz/sphinxql-query-builder" : "dev-master"
+        "foolz/sphinxql-query-builder" : "dev-master#e095695"
     },
-    "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
             "Ekiwok\\SphinxBundle\\": "src/"
         }
-    }
+    },
+    "minimum-stability": "dev"
 }

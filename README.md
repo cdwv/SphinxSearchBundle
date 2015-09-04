@@ -2,19 +2,20 @@
 Some SphinxSearch integration with Symfony for `gigablah/sphinxphp` and `foolz/sphinxql-query-builder`.
 ![Alt text](/doc/images/profiler_error.png?raw=true "Profiler with last error")
 
-
 ### Version 0.1.* was released during [Codewave's shipit day!](http://codewave.eu/shipit-days.html)
 
 # Installation
 Install via composer:
 
-` composer require cdwv/sphinx-search-bundle `
+```sh
+composer require cdwv/sphinx-search-bundle
+```
 
 ## QueryBuilder
 
 You may register many connections. Example configuration is:
 
-```
+```yml
 ekiwok_sphinx:
     connections:
         default:
@@ -29,10 +30,10 @@ ekiwok_sphinx:
 
 Default connection with following configuration will always be created unless you provide alternative default configuration:
 
-```
-    host: localhost
-    port: 9306
-    driver: pdo
+```yml
+host: localhost
+port: 9306
+driver: pdo
 ```
 
 It means if you want to use pdo and you are running sphinx daemon on localhost on port 9306 you do not have to provide any configuration.
@@ -43,21 +44,21 @@ Connections returned by `sphinx` service implements `Ekiwok\SphinxBundle\Sphinx\
 
 Examples of usage:
 
-```
-        $sphinx = $this->get('sphinx');
-        $conn = $sphinx->getConnection();
-        $recipes = $conn->createQueryBuilder()
-                        ->select('id', 'title')
-                        ->from('recipes')
-                        ->match('title', 'chicken')
-                        ->limit(100)
-                        ->execute();
+```yml
+$sphinx = $this->get('sphinx');
+$conn = $sphinx->getConnection();
+$recipes = $conn->createQueryBuilder()
+                ->select('id', 'title')
+                ->from('recipes')
+                ->match('title', 'chicken')
+                ->limit(100)
+                ->execute();
 ```
 
-```
-        $sphinx = $this->get('sphinx');
-        $conn = $sphinx->getConnection();
-        $recipes = $conn->query('SELECT id, title FROM recipes WHERE MATCH("(@title chicken)")');
+```php
+$sphinx = $this->get('sphinx');
+$conn = $sphinx->getConnection();
+$recipes = $conn->query('SELECT id, title FROM recipes WHERE MATCH("(@title chicken)")');
 ```
 
 For more please visit [https://github.com/FoolCode/SphinxQL-Query-Builder](https://github.com/FoolCode/SphinxQL-Query-Builder)
@@ -119,7 +120,7 @@ Well, it shows fancy things and stuff in profiler and toolbar. Those things are 
 
 Because SphinxClient uses binary protocol this bundle does not show real human readable queries that may be copied to sphinx cli. (Now =) Unfortunately, it shows just arguments (query, indexes and comment) passed to query method.
 
-This bundle trakcs all errors that unfold during executing queries.
+This bundle tracks all errors that unfold during executing queries.
 
 # Authors
 This bundle was originally developed by [Piotr Kowalczyk](https://github.com/ekiwok) 

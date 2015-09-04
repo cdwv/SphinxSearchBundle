@@ -38,20 +38,23 @@ class Connection implements ConnectionInterface
 
     /**
      * @param array $config
+     * @param SphinxDataProcessorInterface $processor
      */
     public function __construct(array $config, SphinxDataProcessorInterface $processor)
     {
         $this->config = $config;
         $this->processor = $processor;
-        switch ($config['driver'])
-        {
-            case self::DRIVER_PDO:
-                $this->connection = new PdoConnection(array('host' => $this->config['host'], 'port' => $this->config['port']));
-            return;
 
-            case self::DRIVER_MYSQLI:
-                $this->connection = new PdoConnection(array('host' => $this->config['host'], 'port' => $this->config['port']));
-            return;
+        switch ($config['driver']) {
+            case self::DRIVER_PDO:
+                $this->connection = new PdoConnection();
+                $this->connection->setParams(array('host' => $this->config['host'], 'port' => $this->config['port']));
+                return;
+
+            case self::DRIVER_MYSQLI: // sorry, not implemented but exists as fallback
+                $this->connection = new PdoConnection();
+                $this->connection->setParams(array('host' => $this->config['host'], 'port' => $this->config['port']));
+                return;
         }
 
         throw ConnectionException::unsupportedDriver($config['driver'], self::getSupportedDrivers());

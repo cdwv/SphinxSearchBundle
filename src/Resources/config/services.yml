@@ -2,13 +2,16 @@ services:
     sphinx:
         class: Ekiwok\SphinxBundle\Service\Sphinx
         arguments: ['%sphinx.config%', '@sphinx_stats']
+
     sphinx.client:
         class: Sphinx\SphinxClient
-        calls: 
+        calls:
             - [setServer, ['127.0.0.1', 9312] ]
+
     sphinx.data.collector:
         class: Ekiwok\SphinxBundle\Sphinx\SphinxDataCollector
         arguments: [@sphinx.client, @sphinx_stats]
+
     sphinx_stats:
         class: Ekiwok\SphinxBundle\Service\SphinxStatsCollector
         tags:
